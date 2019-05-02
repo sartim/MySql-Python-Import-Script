@@ -1,55 +1,52 @@
-# This package is for reading data and formatting information from older Excel
-import xlrd
+import sys
+import argparse
 
-# Interface for MySQL Database
-import MySQLdb
-
-#Open the workbook and define the worksheet name and file name like .csv, .xls, .xlsx
-book = xlrd.open_workbook("users.xlsx")
-sheet = book.sheet_by_name("source")
-# sheet = book.sheet_by_index(0)
-
-# Establish a MySQl connection
-database = MySQLdb.connect (host="localhost", user="root", db = "pharma_db")
-
-# Get the cursor, which is used to traverse the database, line by line
-cursor = database.cursor()
-
-# Create the INSERT INTO sql query
-query = """INSERT INTO users (username, password, email, firstname, middlename, lastname) VALUES (%s, %s, %s, %s, %s, %s)"""
-
-# Create a ForLoop to iterate through each row in the XLS file, starting at row 2 to skip the headers
-for r in range (1, sheet.nrows):
-		username = sheet.cell(r,0).value
-		password = sheet.cell(r,1).value
-		email = sheet.cell(r,2).value
-		firstname = sheet.cell(r,3).value
-		middlename = sheet.cell(r,4).value
-		lastname = sheet.cell(r,5).value
-
-		# Assign values from each row
-		values = (username, password, email, firstname, middlename, lastname)
-
-		# Execute sql Query
-		cursor.execute(query, values)
-
-# Close the cursor
-cursor.close()
-
-# Commit the transaction
-database.commit()
-
-# Close the database connection
-database.close()
-
-# Print results
-print ("")
-print ("All Done! Bye, for now.")
-print ("")
-columns = str(sheet.ncols)
-rows = str(sheet.nrows)
-print ("Imported " + columns + " columns and " + "rows to MySQL!")
-
-    
+from mysql_ import connection, importer
 
 
+def get_arguments(argv):
+    parser = argparse.ArgumentParser(description='CSV, XLS, XLSX data set migration to MySQL database')
+    parser.add_argument('-t', '--type', help='The dataset type. Example CSV, XLS, XLSX')
+    parser.add_argument('-d', '--dataset', help='The dataset file to use')
+    parser.add_argument('-s', '--sheet', help='The sheet name to use')
+    args = parser.parse_args()
+    return args
+
+
+def main(args):
+    print("\nImporting...")
+
+    # Variables #
+    type = args.type
+    dataset = args.dataset
+    sheet = args.sheet
+
+    db = connection.connect()
+    if type == 'XLS'or type == 'XLSX':
+        if sheet:
+            importer.run(sheet, dataset, db)
+        else:
+            print("Missing sheet name!! Importing data from first index on spreadsheet")
+            importer.run(sheet, dataset, db)
+
+
+if __name__ == '__main__':
+    arguments = get_arguments(sys.argv)
+
+    if sys.version_info < (3, 0):
+        input = raw_input
+
+    proceed = input("Importing data from dataset {}\nProceed (yes/no)? ".format(arguments.dataset))
+    valid = ["yes", "y", "no", "n"]
+    while True:
+        if proceed.lower() in valid:
+            if proceed.lower() == "yes" or proceed.lower() == "y":
+                main(arguments)
+                print("Done!")
+                break
+            else:
+                print("Goodbye!")
+                break
+        else:
+            print("Please respond with 'yes' or 'no' (or 'y' or 'n').")
+            proceed = input("\nProceed (yes/no)? ")
