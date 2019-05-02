@@ -22,7 +22,7 @@ You should create a .env file on the project root. You can get this on the repo 
 
 **Running script**
 
-    $ python import.py -t XLSX -d data/users.xlsx -s source
+    $ python import.py -t spreadsheet -d data/users.xlsx -s source
     
 ###### arguments
     
