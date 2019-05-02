@@ -22,7 +22,7 @@ def main(args):
     sheet = args.sheet
 
     db = connection.connect()
-    if type == 'XLS'or type == 'XLSX':
+    if type == 'spreadsheet':
         if sheet:
             importer.run(sheet, dataset, db)
         else:
