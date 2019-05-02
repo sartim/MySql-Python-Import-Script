@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*$py.class
 
 # C extensions
 *.so
@@ -22,6 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+/CACHE
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -42,6 +44,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *,cover
+.hypothesis/
 
 # Translations
 *.mo
@@ -49,9 +52,49 @@ coverage.xml
 
 # Django stuff:
 *.log
+local.py
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
 
 # Sphinx documentation
 docs/_build/
 
 # PyBuilder
 target/
+
+# IPython Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# dotenv
+.env
+.env.local
+.env.stage
+.env.prod
+
+# virtualenv
+venv/
+ENV/
+
+# Spyder project settings
+.spyderproject
+
+# Rope project settings
+.ropeproject
+
+# SQLite3
+db.sqlite3
+
+# Editors
+.idea/
+.vscode/
