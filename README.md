@@ -16,10 +16,6 @@ Python script for importing data from .csv, .xls, or .xlsx to MySql database.
     $ source <envname>/bin/activate
     $ pip install -r requirements.txt
 
-**Add dotenv to project root**
-
-You should create a .env file on the project root. You can get this on the repo url https://github.com/hivisasapro/hivisasa-stage-dotenv
-
 **Running script**
 
     $ python import.py -t spreadsheet -d data/users.xlsx -s source
