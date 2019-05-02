@@ -8,7 +8,7 @@ def connect():
     # Establish a MySQl connection
     db = None
     try:
-        db = mysql.connector.connect(user='root', password='MySqlAcn', host='127.0.0.1', database='test')
+        db = mysql.connector.connect(user='username', password='password', host='host', database='database')
         return db
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
