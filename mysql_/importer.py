@@ -24,7 +24,10 @@ def run(sheet_name, dataset_path, db):
         cursor = db.cursor()
 
         # Create the INSERT INTO sql query
-        query = """INSERT INTO users (username, password, email, first_name, middle_name, last_name) VALUES (%s, %s, %s, %s, %s, %s)"""
+        query = """
+          INSERT INTO users (username, password, email, first_name, middle_name, last_name) 
+          VALUES (%s, %s, %s, %s, %s, %s)
+        """
 
         # Create a ForLoop to iterate through each row in the XLS file, starting at row 2 to skip the headers
         for r in range(1, sheet.nrows):
