@@ -1,8 +1,13 @@
+"""
+Creating MySQL connection
+"""
+
 # Interface for MySQL Database
 import mysql.connector
 
 # For connection error handling
 from mysql.connector import errorcode
+
 
 def connect():
     # Establish a MySQl connection

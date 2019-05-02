@@ -1,3 +1,7 @@
+"""
+Execute command using argument parser
+"""
+
 import sys
 import argparse
 
