@@ -5,10 +5,15 @@ Execute command using argument parser
 import sys
 import argparse
 
-from mysql_ import connection, importer
+from core import connection, importer
 
 
 def get_arguments(argv):
+    """
+    Get arguments using ArgumentParser
+    :param argv:
+    :return args:
+    """
     parser = argparse.ArgumentParser(description='CSV, XLS, XLSX data set migration to MySQL database')
     parser.add_argument('-t', '--type', help='The dataset type. Example CSV, XLS, XLSX')
     parser.add_argument('-d', '--dataset', help='The dataset file to use')
@@ -28,10 +33,13 @@ def main(args):
     db = connection.connect()
     if type == 'spreadsheet':
         if sheet:
-            importer.run(sheet, dataset, db)
+            importer.run_spreadsheet_import(sheet, dataset, db)
         else:
             print("Missing sheet name!! Importing data from first index on spreadsheet")
-            importer.run(sheet, dataset, db)
+            importer.run_spreadsheet_import(sheet, dataset, db)
+    elif type == 'csv':
+        importer.run_csv_import(dataset, db)
+
 
 
 if __name__ == '__main__':
