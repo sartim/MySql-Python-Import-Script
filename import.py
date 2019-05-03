@@ -15,13 +15,13 @@ def get_arguments(argv):
     :return args:
     """
     parser = argparse.ArgumentParser(description='CSV, XLS, XLSX data set migration to MySQL database')
-    parser.add_argument('-t', '--type', help='The dataset type. Example CSV, XLS, XLSX')
+    parser.add_argument('-t', '--type', help='The dataset type. Spreadsheet or csv')
     parser.add_argument('-f', '--file', help='The dataset file to use')
     parser.add_argument('-s', '--sheet', help='The sheet name to use')
-    parser.add_argument('-h', '--host', help='The host name to use')
-    parser.add_argument('-u', '--user', help='The username to use')
-    parser.add_argument('-p', '--password', help='The password to use')
-    parser.add_argument('-d', '--database', help='The database name to use')
+    parser.add_argument('-H', '--host', help='The host name to use')
+    parser.add_argument('-U', '--user', help='The username to use')
+    parser.add_argument('-P', '--password', help='The password to use')
+    parser.add_argument('-D', '--database', help='The database name to use')
     args = parser.parse_args()
     return args
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     if sys.version_info < (3, 0):
         input = raw_input
 
-    proceed = input("Importing data from dataset {}\nProceed (yes/no)? ".format(arguments.dataset))
+    proceed = input("Importing data from dataset {}\nProceed (yes/no)? ".format(arguments.file))
     valid = ["yes", "y", "no", "n"]
     while True:
         if proceed.lower() in valid:
