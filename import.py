@@ -16,8 +16,12 @@ def get_arguments(argv):
     """
     parser = argparse.ArgumentParser(description='CSV, XLS, XLSX data set migration to MySQL database')
     parser.add_argument('-t', '--type', help='The dataset type. Example CSV, XLS, XLSX')
-    parser.add_argument('-d', '--dataset', help='The dataset file to use')
+    parser.add_argument('-f', '--file', help='The dataset file to use')
     parser.add_argument('-s', '--sheet', help='The sheet name to use')
+    parser.add_argument('-h', '--host', help='The host name to use')
+    parser.add_argument('-u', '--user', help='The username to use')
+    parser.add_argument('-p', '--password', help='The password to use')
+    parser.add_argument('-d', '--database', help='The database name to use')
     args = parser.parse_args()
     return args
 
@@ -27,18 +31,22 @@ def main(args):
 
     # Variables #
     type = args.type
-    dataset = args.dataset
+    file = args.file
     sheet = args.sheet
+    host = args.host
+    user = args.user
+    password = args.password
+    database = args.database
 
-    db = connection.connect()
+    db = connection.connect(user, password, host, database)
     if type == 'spreadsheet':
         if sheet:
-            importer.run_spreadsheet_import(sheet, dataset, db)
+            importer.run_spreadsheet_import(sheet, file, db)
         else:
             print("Missing sheet name!! Importing data from first index on spreadsheet")
-            importer.run_spreadsheet_import(sheet, dataset, db)
+            importer.run_spreadsheet_import(sheet, file, db)
     elif type == 'csv':
-        importer.run_csv_import(dataset, db)
+        importer.run_csv_import(file, db)
 
 
 
