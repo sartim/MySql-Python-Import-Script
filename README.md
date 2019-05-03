@@ -18,7 +18,8 @@ Python script for importing data from .csv, .xls, or .xlsx to MySql database.
 
 **Running script**
 
-    $ python import.py -t spreadsheet -d data/users.xlsx -s source
+    $ python import.py -t spreadsheet -f data/users.xlsx -s source
+    $ python import.py -t csv -f data/users.csv
     
 ###### arguments
     
@@ -26,10 +27,26 @@ _-t (type)_
     
 spreadsheet, csv
 
-_-d (dataset)_
+_-f (file)_
 
-Path to dataset
+Path to dataset file 
 
 _-s (sheet name)_
 
 Used if the dataset type in use is a spreadsheet
+
+_-h (host name)_
+
+Database host name
+
+_-u (username)_
+
+Database username
+
+_-p (password)_
+
+Database password
+
+_-d (database name)_
+
+Database name
