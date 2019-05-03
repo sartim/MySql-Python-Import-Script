@@ -1,14 +1,14 @@
 """
-Runs Importer using xlrd
+Runs import for both new & old spreadsheets formats and csv files
 """
 
-# This package is for reading data and formatting information which supports old Excel format
+import csv
 import xlrd
 
 
-def run(sheet_name, dataset_path, db):
+def run_spreadsheet_import(sheet_name, dataset, db):
     """
-    Reads data set and inserts data to the database instance
+    Reads excel spreadsheet and inserts data to the database instance
     :param sheet_name:
     :param dataset_path:
     :param db:
@@ -16,7 +16,7 @@ def run(sheet_name, dataset_path, db):
     """
     try:
         # Open the workbook and define the worksheet name and file name like .csv, .xls, .xlsx
-        book = xlrd.open_workbook(dataset_path)
+        book = xlrd.open_workbook(dataset)
 
         # Check for sheet name parsed
         if sheet_name:
@@ -66,3 +66,38 @@ def run(sheet_name, dataset_path, db):
         print("Imported " + columns + " columns and " + "rows to MySQL!")
     except Exception as e:
         print(e)
+
+
+def run_csv_import(dataset, db):
+    # Get the cursor, which is used to traverse the database, line by line
+    cursor = db.cursor()
+
+    # Get the headers from csv
+    with open(dataset, mode='r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        headers = list(csv_reader)[0]
+
+    # Open csv file and write data to db instance
+    with open(dataset, mode='r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        args = ",".join(repr(e) for e in [{} for v in headers])
+        next(csv_reader)
+        for row in csv_reader:
+            query = """
+                      INSERT INTO users ({})
+                      VALUES ({})
+                    """.format(args, args)
+            values=['%s' for v in range(len(headers))]
+            query = query.format(*headers, *values)
+
+            # Execute sql Query
+            cursor.execute(query, [row[v] for v in range(len(headers))])
+
+        # Close the cursor
+        cursor.close()
+
+        # Commit the transaction
+        db.commit()
+
+        # Close the database connection
+        db.close()
