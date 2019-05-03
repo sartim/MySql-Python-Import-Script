@@ -9,11 +9,11 @@ import mysql.connector
 from mysql.connector import errorcode
 
 
-def connect():
+def connect(user, password, host, database):
     # Establish a MySQl connection
     db = None
     try:
-        db = mysql.connector.connect(user='root', password='MySqlAcn', host='localhost', database='test')
+        db = mysql.connector.connect(user=user, password=password, host=host, database=database)
         return db
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
