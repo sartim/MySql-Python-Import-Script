@@ -1,5 +1,6 @@
 # MySql-Python-Import-Script
-Python script for importing data from .csv, .xls, or .xlsx to MySql database.
+Python script for importing data from .csv, .xls, or .xlsx to MySql database. It requires the headers to run an insert
+query to database using the headers as the fields.
 
 ## Setup
 
@@ -17,9 +18,10 @@ Python script for importing data from .csv, .xls, or .xlsx to MySql database.
     $ pip install -r requirements.txt
 
 **Running script**
-
-    $ python import.py -t spreadsheet -f data/users.xlsx -s source
-    $ python import.py -t csv -f data/users.csv
+    
+    $ python import.py -h
+    $ python import.py -t spreadsheet -f data/users.xlsx -s source -H hostname.com -U username -P pwd -D db_name
+    $ python import.py -t csv -f data/users.csv -H hostname.com -U username -P pwd -D db_name
     
 ###### arguments
     
