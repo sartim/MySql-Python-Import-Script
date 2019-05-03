@@ -37,18 +37,18 @@ _-s (sheet name)_
 
 Used if the dataset type in use is a spreadsheet
 
-_-h (host name)_
+_-H (host name)_
 
 Database host name
 
-_-u (username)_
+_-U (username)_
 
 Database username
 
-_-p (password)_
+_-P (password)_
 
 Database password
 
-_-d (database name)_
+_-D (database name)_
 
 Database name
